@@ -48,11 +48,26 @@ app.post("/menu",async (req,res)=>{
     }
 })
 
+//this is the method for getting values in menu 
+app.get("/menu",async (req,res)=>{
+    try{
+    const cursor=await menuitems.find()
+    console.log("data shown")
+    res.status(200).json(cursor)
+    }
+    catch(err){
+        console.log(err);
+        res.status(500).json({error:"this is internal error"});
+    }
+})
+
 //import the router file
 const personroutes=require("../mongodb_conn/routes/personroutes")
 app.use("/",personroutes)
 
 const PORT = process.env.PORT || 3000;
+
+console.log("PORT =", PORT);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
